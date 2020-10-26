@@ -204,7 +204,7 @@ static uint32_t MB_WriteRegsHandler(uint8_t * frame, uint32_t len)
     if(error == MB_ERROR_NO)
     {
         for(uint16_t i = 0; i < regNum; i++)
-            MB_SetReg(startAddr + i, (((frame[7 + (i << i)]) << 8) | frame[8 + (i << 1)]));
+            MB_SetReg(startAddr + i, __REV16(*((uint16_t*)&frame[7] + i)));
         txLen = 6;
         /*Calculate CRC*/
         uint16_t crc = MB_GetCRC(frame, txLen);
